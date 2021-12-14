@@ -10,13 +10,20 @@ import java.util.ArrayList;
 
 import ifpr.pgua.eic.projetovendas.daos.interfaces.PessoaDAO;
 import ifpr.pgua.eic.projetovendas.models.Pessoa;
+import ifpr.pgua.eic.projetovendas.utils.FabricaConexoes;
 
 public class JDBCPessoaDAO implements PessoaDAO {
 
+    private FabricaConexoes fabricaConexoes;
+
+    public JDBCPessoaDAO(FabricaConexoes fabricaConexoes){
+        this.fabricaConexoes = fabricaConexoes;
+    }
+
+
     @Override
     public boolean cadastrar(Pessoa p) throws Exception {
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "user",
-                "user12345");
+        Connection con = fabricaConexoes.getConnection();
 
         String sql = "INSERT INTO pessoas(nome,email,telefone) VALUES (?,?,?)";
 
@@ -59,8 +66,7 @@ public class JDBCPessoaDAO implements PessoaDAO {
     public ArrayList<Pessoa> listar() throws Exception {
         ArrayList<Pessoa> lista = new ArrayList<>();
 
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "user",
-                "user12345");
+        Connection con = fabricaConexoes.getConnection();
 
         String sql = "SELECT * FROM pessoas";
 

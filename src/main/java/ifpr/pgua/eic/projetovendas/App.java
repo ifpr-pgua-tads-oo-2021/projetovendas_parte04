@@ -16,14 +16,17 @@ import ifpr.pgua.eic.projetovendas.daos.interfaces.ProdutoDAO;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioPessoas;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioProdutos;
 import ifpr.pgua.eic.projetovendas.telas.Home;
+import ifpr.pgua.eic.projetovendas.utils.FabricaConexoes;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
 
-    PessoaDAO pessoaDAO = new JDBCPessoaDAO();
-    ProdutoDAO produtoDAO = new JDBCProdutoDAO();
+    FabricaConexoes fabricaConexoes = FabricaConexoes.getInstance();
+
+    PessoaDAO pessoaDAO = new JDBCPessoaDAO(fabricaConexoes);
+    ProdutoDAO produtoDAO = new JDBCProdutoDAO(fabricaConexoes);
 
     RepositorioProdutos repositorio = new RepositorioProdutos(produtoDAO);
     RepositorioPessoas repositorioPessoas = new RepositorioPessoas(pessoaDAO);
