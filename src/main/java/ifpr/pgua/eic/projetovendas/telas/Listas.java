@@ -5,7 +5,7 @@ import java.util.List;
 import ifpr.pgua.eic.projetovendas.models.Pessoa;
 import ifpr.pgua.eic.projetovendas.models.Produto;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioPessoas;
-import ifpr.pgua.eic.projetovendas.repositorios.RepositorioVendas;
+import ifpr.pgua.eic.projetovendas.repositorios.RepositorioProdutos;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -25,10 +25,10 @@ public class Listas {
     private Label lbListaVaziaProdutos;
 
     
-    private RepositorioVendas repositorio;
+    private RepositorioProdutos repositorio;
     private RepositorioPessoas repositorioPessoas;
 
-    public Listas(RepositorioPessoas repositorioPessoas, RepositorioVendas repositorio){
+    public Listas(RepositorioPessoas repositorioPessoas, RepositorioProdutos repositorio){
         this.repositorio = repositorio;
         this.repositorioPessoas = repositorioPessoas;
     }
@@ -46,18 +46,11 @@ public class Listas {
             };
         });
 
-        List<Produto> produtos = repositorio.listarProdutos();
-        if(produtos.size() > 0){
-            lstProdutos.getItems().addAll(produtos);
-        }else{
-            lstProdutos.setVisible(false);
-            lbListaVaziaProdutos.setVisible(true);
-        }
-        
-        
-        
         try{
             lstPessoas.getItems().addAll(repositorioPessoas.listarPessoas());
+            List<Produto> produtos = repositorio.listarProdutos();
+            lstProdutos.getItems().addAll(produtos);
+            
         }catch(Exception e){
             Alert alert = new Alert(AlertType.ERROR, e.getMessage());
             alert.showAndWait();

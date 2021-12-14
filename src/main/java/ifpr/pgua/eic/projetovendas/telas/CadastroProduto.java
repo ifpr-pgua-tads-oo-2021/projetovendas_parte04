@@ -1,6 +1,8 @@
 package ifpr.pgua.eic.projetovendas.telas;
 
-import ifpr.pgua.eic.projetovendas.repositorios.RepositorioVendas;
+import java.sql.SQLException;
+
+import ifpr.pgua.eic.projetovendas.repositorios.RepositorioProdutos;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -21,9 +23,9 @@ public class CadastroProduto {
     private TextField tfValor;
 
 
-    private RepositorioVendas repositorio;
+    private RepositorioProdutos repositorio;
 
-    public CadastroProduto(RepositorioVendas repositorio){
+    public CadastroProduto(RepositorioProdutos repositorio){
         this.repositorio = repositorio;
     }
 
@@ -66,19 +68,22 @@ public class CadastroProduto {
 
 
         if(!temErro){
-            boolean ret = repositorio.cadastrarProduto(nome, descricao, quantidadeEstoque, valor);
-            if(ret){
-                msg = "Produto cadastrado com sucesso!";
-                limpar();
-            }else{
-                msg = "Erro ao cadastrar produto!";
-            }
+            try{
+                boolean ret = repositorio.cadastrarProduto(nome, descricao, quantidadeEstoque, valor);
+                if(ret){
+                    msg = "Produto cadastrado com sucesso!";
+                    limpar();
+                }else{
+                    msg = "Erro ao cadastrar produto!";
+                }
+            }catch(SQLException e){
+                temErro = true;
+                msg = e.getMessage();
+            } 
         }
 
         Alert alert = new Alert(temErro?AlertType.ERROR:AlertType.INFORMATION,msg);
         alert.showAndWait();
-
-
     }
 
     @FXML

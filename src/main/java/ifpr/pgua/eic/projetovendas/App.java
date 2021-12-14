@@ -10,10 +10,11 @@ import javafx.util.Callback;
 import java.io.IOException;
 
 import ifpr.pgua.eic.projetovendas.daos.JDBCPessoaDAO;
-import ifpr.pgua.eic.projetovendas.daos.JSONPessoaDAO;
+import ifpr.pgua.eic.projetovendas.daos.JDBCProdutoDAO;
 import ifpr.pgua.eic.projetovendas.daos.interfaces.PessoaDAO;
+import ifpr.pgua.eic.projetovendas.daos.interfaces.ProdutoDAO;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioPessoas;
-import ifpr.pgua.eic.projetovendas.repositorios.RepositorioVendas;
+import ifpr.pgua.eic.projetovendas.repositorios.RepositorioProdutos;
 import ifpr.pgua.eic.projetovendas.telas.Home;
 
 /**
@@ -22,8 +23,9 @@ import ifpr.pgua.eic.projetovendas.telas.Home;
 public class App extends Application {
 
     PessoaDAO pessoaDAO = new JDBCPessoaDAO();
-    
-    RepositorioVendas repositorio = new RepositorioVendas();
+    ProdutoDAO produtoDAO = new JDBCProdutoDAO();
+
+    RepositorioProdutos repositorio = new RepositorioProdutos(produtoDAO);
     RepositorioPessoas repositorioPessoas = new RepositorioPessoas(pessoaDAO);
 
 

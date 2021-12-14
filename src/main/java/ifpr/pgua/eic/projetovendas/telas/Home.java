@@ -2,20 +2,20 @@ package ifpr.pgua.eic.projetovendas.telas;
 
 import ifpr.pgua.eic.projetovendas.App;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioPessoas;
-import ifpr.pgua.eic.projetovendas.repositorios.RepositorioVendas;
+import ifpr.pgua.eic.projetovendas.repositorios.RepositorioProdutos;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 
 public class Home {
     
-    private RepositorioVendas repositorio;
+    private RepositorioProdutos repositorio;
     private RepositorioPessoas repositorioPessoas;
     
     @FXML
     private StackPane painelCentral;
 
 
-    public Home(RepositorioPessoas repositorioPessoas, RepositorioVendas repositorio){
+    public Home(RepositorioPessoas repositorioPessoas, RepositorioProdutos repositorio){
         this.repositorio = repositorio;
         this.repositorioPessoas = repositorioPessoas;
     }

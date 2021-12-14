@@ -3,7 +3,7 @@ package ifpr.pgua.eic.projetovendas.telas;
 import java.sql.SQLException;
 
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioPessoas;
-import ifpr.pgua.eic.projetovendas.repositorios.RepositorioVendas;
+import ifpr.pgua.eic.projetovendas.repositorios.RepositorioProdutos;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
