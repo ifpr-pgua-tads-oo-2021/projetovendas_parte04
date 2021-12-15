@@ -90,6 +90,17 @@ public class JDBCPessoaDAO implements PessoaDAO {
         return ret==1;
     }
 
+    private Pessoa montarPessoa(ResultSet rs) throws Exception{
+        int id = rs.getInt("id");
+        String nome = rs.getString("nome");
+        String email = rs.getString("email");
+        String telefone = rs.getString("telefone");
+
+        Pessoa p = new Pessoa(id, nome, email, telefone);
+
+        return p;
+    }
+
     @Override
     public ArrayList<Pessoa> listar() throws Exception {
         ArrayList<Pessoa> lista = new ArrayList<>();
@@ -103,13 +114,7 @@ public class JDBCPessoaDAO implements PessoaDAO {
         ResultSet rs = pstmt.executeQuery();
 
         while(rs.next()){
-            int id = rs.getInt("id");
-            String nome = rs.getString("nome");
-            String email = rs.getString("email");
-            String telefone = rs.getString("telefone");
-
-            Pessoa p = new Pessoa(id,nome, email, telefone);
-
+            Pessoa p = montarPessoa(rs);
             lista.add(p);
         }
 
@@ -118,6 +123,32 @@ public class JDBCPessoaDAO implements PessoaDAO {
         con.close();
 
         return lista;
+    }
+
+
+    @Override
+    public Pessoa buscar(int id) throws Exception {
+        Pessoa p = null;
+        
+        Connection con = fabricaConexoes.getConnection();
+
+        String sql = "SELECT * FROM pessoas WHERE id=?";
+
+        PreparedStatement pstmt = con.prepareStatement(sql);
+
+        pstmt.setInt(1,id);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        while(rs.next()){
+            p = montarPessoa(rs);
+        }
+
+        rs.close();
+        pstmt.close();
+        con.close();
+
+        return p;
     }
 
 }

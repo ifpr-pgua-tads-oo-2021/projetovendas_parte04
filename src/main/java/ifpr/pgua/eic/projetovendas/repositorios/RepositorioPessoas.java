@@ -23,39 +23,45 @@ public class RepositorioPessoas {
     }
 
     public boolean cadastrarPessoa(String nome, String email, String telefone) throws SQLException {
-        if (buscarPessoa(email) == null) {
-            Pessoa p = new Pessoa(nome, email, telefone);
-            
-            try{
-                pessoaDAO.cadastrar(p);
-                this.pessoas.add(p);
-                
-                return true;
-            }catch(Exception e){
-                throw new SQLException(e.getCause());
-            }
-            
+        Pessoa p = new Pessoa(nome, email, telefone);
+
+        try {
+            pessoaDAO.cadastrar(p);
+            this.pessoas.add(p);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException(e.getMessage());
         }
 
-        return false;
+        
     }
 
-    public boolean atualizarPessoa(int id, String nome, String email, String telefone) throws SQLException{
+    public boolean atualizarPessoa(int id, String nome, String email, String telefone) throws SQLException {
 
         Pessoa pessoa = new Pessoa(nome, email, telefone);
 
-        try{
+        try {
             return pessoaDAO.atualizar(id, pessoa);
-        }catch(Exception e){
-            throw new SQLException(e.getCause());
+        } catch (Exception e) {
+            throw new SQLException(e.getMessage());
         }
     }
 
-    public boolean removerPessoa(int id) throws SQLException{
-        try{
+    public boolean removerPessoa(int id) throws SQLException {
+        try {
             return pessoaDAO.remover(id);
-        }catch(Exception e){
-            throw new SQLException(e.getCause());
+        } catch (Exception e) {
+            throw new SQLException(e.getMessage());
+        }
+    }
+
+    public Pessoa buscar(int id) throws SQLException {
+        try {
+            return pessoaDAO.buscar(id);
+        } catch (Exception e) {
+            throw new SQLException(e.getMessage());
         }
     }
 
