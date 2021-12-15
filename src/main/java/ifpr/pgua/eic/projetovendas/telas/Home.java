@@ -37,4 +37,10 @@ public class Home {
         painelCentral.getChildren().clear();
         painelCentral.getChildren().add(App.loadTela("fxml/cadastro_produto.fxml", (o)->new CadastroProduto(repositorio)));
     }
+
+    @FXML
+    private void loadRealizarVenda(){
+        painelCentral.getChildren().clear();
+        painelCentral.getChildren().add(App.loadTela("fxml/realiza_venda.fxml", (o)->new RealizaVenda()));
+    }
 }

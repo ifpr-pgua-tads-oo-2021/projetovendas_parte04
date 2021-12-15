@@ -18,6 +18,8 @@
          <Button onAction="#loadListas" text="Listas" />
          <Button text="Cadastrar Pessoa" onAction="#loadCadastroPessoa"/>
          <Button text="Cadastrar Produto" onAction="#loadCadastroProduto"/>
+         <Button text="Realizar Venda" onAction="#loadRealizarVenda"/>
+      
       </VBox>
    </left>
 
