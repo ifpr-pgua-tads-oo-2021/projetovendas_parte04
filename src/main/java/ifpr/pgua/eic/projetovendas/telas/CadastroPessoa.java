@@ -2,6 +2,7 @@ package ifpr.pgua.eic.projetovendas.telas;
 
 import java.sql.SQLException;
 
+import ifpr.pgua.eic.projetovendas.models.Pessoa;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioPessoas;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioProdutos;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ public class CadastroPessoa {
     private TextField tfTelefone;
 
     private RepositorioPessoas repositorio;
+
 
     public CadastroPessoa(RepositorioPessoas repositorio) {
         this.repositorio = repositorio;

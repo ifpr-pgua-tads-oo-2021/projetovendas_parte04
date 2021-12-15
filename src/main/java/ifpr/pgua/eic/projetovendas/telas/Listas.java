@@ -2,6 +2,7 @@ package ifpr.pgua.eic.projetovendas.telas;
 
 import java.util.List;
 
+import ifpr.pgua.eic.projetovendas.App;
 import ifpr.pgua.eic.projetovendas.models.Pessoa;
 import ifpr.pgua.eic.projetovendas.models.Produto;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioPessoas;
@@ -13,6 +14,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
 
+
 public class Listas {
 
     @FXML
@@ -23,6 +25,7 @@ public class Listas {
 
     @FXML
     private Label lbListaVaziaProdutos;
+
 
     
     private RepositorioProdutos repositorio;
@@ -57,5 +60,6 @@ public class Listas {
         }
         
     }
+
 
 }
