@@ -52,8 +52,25 @@ public class JDBCPessoaDAO implements PessoaDAO {
 
     @Override
     public boolean atualizar(int id, Pessoa p) throws Exception {
-        // TODO Auto-generated method stub
-        return false;
+        Connection con = fabricaConexoes.getConnection();
+
+        String sql = "UPDATE pessoas SET nome=?,email=?,telefone=? WHERE id=?";
+
+        PreparedStatement pstmt = con.prepareStatement(sql);
+
+        pstmt.setString(1, p.getNome());
+        pstmt.setString(2, p.getEmail());
+        pstmt.setString(3, p.getTelefone());
+        pstmt.setInt(4, id);
+
+        int ret = pstmt.executeUpdate();
+
+        pstmt.close();
+        con.close();
+
+        return ret==1;
+
+
     }
 
     @Override

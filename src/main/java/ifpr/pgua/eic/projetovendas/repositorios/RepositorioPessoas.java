@@ -40,6 +40,17 @@ public class RepositorioPessoas {
         return false;
     }
 
+    public boolean atualizarPessoa(int id, String nome, String email, String telefone) throws SQLException{
+
+        Pessoa pessoa = new Pessoa(nome, email, telefone);
+
+        try{
+            return pessoaDAO.atualizar(id, pessoa);
+        }catch(Exception e){
+            throw new SQLException(e.getCause());
+        }
+    }
+
     public Pessoa buscarPessoa(String email) {
         return this.pessoas.stream().filter((pessoa) -> pessoa.getEmail().equals(email)).findFirst().orElse(null);
     }

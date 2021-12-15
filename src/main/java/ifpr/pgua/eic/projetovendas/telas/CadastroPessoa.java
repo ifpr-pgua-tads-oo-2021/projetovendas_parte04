@@ -7,6 +7,7 @@ import ifpr.pgua.eic.projetovendas.repositorios.RepositorioPessoas;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioProdutos;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 
@@ -21,11 +22,31 @@ public class CadastroPessoa {
     @FXML
     private TextField tfTelefone;
 
+    @FXML
+    private Button btCadastrar;
+
     private RepositorioPessoas repositorio;
 
+    private Pessoa pessoaExistente = null;
 
     public CadastroPessoa(RepositorioPessoas repositorio) {
         this.repositorio = repositorio;
+    }
+
+    public CadastroPessoa(Pessoa pessoaExiste, RepositorioPessoas repositorio){
+        this.repositorio = repositorio;
+        this.pessoaExistente = pessoaExiste;
+    }
+
+    public void initialize(){
+        if( pessoaExistente != null){
+            tfNome.setText(pessoaExistente.getNome());
+            tfEmail.setText(pessoaExistente.getEmail());
+            tfTelefone.setText(pessoaExistente.getTelefone());
+
+            btCadastrar.setText("Atualizar");
+
+        }
     }
 
     @FXML
@@ -54,8 +75,14 @@ public class CadastroPessoa {
 
         if (!temErro) {
             try {
-                boolean ret = repositorio.cadastrarPessoa(nome, email, telefone);
-
+                boolean ret;
+                
+                if(pessoaExistente != null){
+                    ret = repositorio.atualizarPessoa(pessoaExistente.getId(), nome, email, telefone);
+                }else{
+                    ret = repositorio.cadastrarPessoa(nome, email, telefone);
+                }
+                
                 if (ret) {
                     msg = "Pessoa cadastrada com sucesso!";
                     limpar();

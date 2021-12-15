@@ -13,6 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 
 
 public class Listas {
@@ -25,6 +28,9 @@ public class Listas {
 
     @FXML
     private Label lbListaVaziaProdutos;
+
+    @FXML
+    private FlowPane rootPane;
 
 
     
@@ -59,6 +65,25 @@ public class Listas {
             alert.showAndWait();
         }
         
+    }
+
+    @FXML
+    private void atualizarPessoa(MouseEvent event){
+
+        if(event.getClickCount() == 2){
+            Pessoa pessoaSelecionada = lstPessoas.getSelectionModel().getSelectedItem();
+
+            if(pessoaSelecionada != null){
+                //substituir o painelCentral do Home
+                StackPane painelCentral = (StackPane) rootPane.getParent();
+
+                painelCentral.getChildren().clear();
+                painelCentral.getChildren().add(App.loadTela("fxml/cadastro_pessoa.fxml", o->new CadastroPessoa(pessoaSelecionada, repositorioPessoas)));
+            }
+
+        }
+
+
     }
 
 

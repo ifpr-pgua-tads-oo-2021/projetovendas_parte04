@@ -6,11 +6,12 @@
 <FlowPane xmlns="http://javafx.com/javafx/17" 
           xmlns:fx="http://javafx.com/fxml/1" 
           fx:controller="ifpr.pgua.eic.projetovendas.telas.Listas"
+          fx:id="rootPane"
           >
    <children>
       <VBox>
          <Label text="Pessoas"/>
-         <ListView fx:id="lstPessoas"/>
+         <ListView fx:id="lstPessoas" onMouseClicked="#atualizarPessoa"/>
       </VBox>
 
       <VBox>
