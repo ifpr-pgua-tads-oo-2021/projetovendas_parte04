@@ -62,6 +62,19 @@ public class JDBCProdutoDAO implements ProdutoDAO {
         return false;
     }
 
+    private Produto montarProduto(ResultSet rs) throws Exception{
+        int id = rs.getInt("id");
+        String nome = rs.getString("nome");
+        String descricao = rs.getString("descricao");
+        int quantidadeEstoque = rs.getInt("quantidadeEstoque");
+        double valor = rs.getDouble("valor");
+
+        Produto p = new Produto(nome, descricao, quantidadeEstoque, valor);
+
+        return p;
+    }
+
+
     @Override
     public ArrayList<Produto> lista() throws Exception {
         ArrayList<Produto> lista = new ArrayList<>();
@@ -75,14 +88,7 @@ public class JDBCProdutoDAO implements ProdutoDAO {
         ResultSet rs = pstmt.executeQuery();
 
         while(rs.next()){
-            int id = rs.getInt("id");
-            String nome = rs.getString("nome");
-            String descricao = rs.getString("descricao");
-            int quantidadeEstoque = rs.getInt("quantidadeEstoque");
-            double valor = rs.getDouble("valor");
-
-            Produto p = new Produto(nome, descricao, quantidadeEstoque, valor);
-
+            Produto p = montarProduto(rs);
             lista.add(p);
         }
 
@@ -92,6 +98,33 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 
         return lista;
 
+    }
+
+
+    @Override
+    public Produto buscar(int id) throws Exception {
+        Produto p = null;
+        Connection con = fabricaConexoes.getConnection();
+        
+        String sql = "SELECT * FROM produtos WHERE id=?";
+        
+        PreparedStatement pstmt = con.prepareStatement(sql);
+
+        pstmt.setInt(1, id);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        while(rs.next()){
+            p = montarProduto(rs);
+            
+        }
+
+        rs.close();
+        pstmt.close();
+        con.close();
+
+        return p;
+        
     }
 
 }

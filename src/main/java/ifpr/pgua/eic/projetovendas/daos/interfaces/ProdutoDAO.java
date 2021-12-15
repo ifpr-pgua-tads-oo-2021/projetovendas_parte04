@@ -11,5 +11,5 @@ public interface ProdutoDAO {
     boolean atualizar(int id, Produto p) throws Exception;
     boolean remover(Produto p) throws Exception;
     ArrayList<Produto> lista() throws Exception;
-    
+    Produto buscar(int id) throws Exception;
 }
