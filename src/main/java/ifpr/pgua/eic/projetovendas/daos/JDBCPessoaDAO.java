@@ -74,9 +74,20 @@ public class JDBCPessoaDAO implements PessoaDAO {
     }
 
     @Override
-    public boolean remover(Pessoa p) throws Exception {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean remover(int id) throws Exception {
+        Connection con = fabricaConexoes.getConnection();
+
+        //String sql = "DELETE FROM pessoas WHERE id=?";
+
+        String sql = "UPDATE pessoas SET ativo=0 WHERE id=?";
+
+        PreparedStatement pstmt = con.prepareStatement(sql);
+
+        pstmt.setInt(1, id);
+
+        int ret = pstmt.executeUpdate();
+
+        return ret==1;
     }
 
     @Override
@@ -85,7 +96,7 @@ public class JDBCPessoaDAO implements PessoaDAO {
 
         Connection con = fabricaConexoes.getConnection();
 
-        String sql = "SELECT * FROM pessoas";
+        String sql = "SELECT * FROM pessoas WHERE ativo=1";
 
         PreparedStatement pstmt = con.prepareStatement(sql);
 

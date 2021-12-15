@@ -1,5 +1,6 @@
 package ifpr.pgua.eic.projetovendas.telas;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import ifpr.pgua.eic.projetovendas.App;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -68,11 +70,23 @@ public class Listas {
     }
 
     @FXML
-    private void atualizarPessoa(MouseEvent event){
+    private void atualizarRemoverPessoa(MouseEvent event){
+        Pessoa pessoaSelecionada = lstPessoas.getSelectionModel().getSelectedItem();
 
-        if(event.getClickCount() == 2){
-            Pessoa pessoaSelecionada = lstPessoas.getSelectionModel().getSelectedItem();
-
+        if(event.getButton() == MouseButton.SECONDARY && event.getClickCount() == 2){
+            if(pessoaSelecionada != null){
+                try{
+                    repositorioPessoas.removerPessoa(pessoaSelecionada.getId());
+                    lstPessoas.getItems().clear();
+                    lstPessoas.getItems().addAll(repositorioPessoas.listarPessoas());
+                }catch(Exception e){
+                    Alert alert = new Alert(AlertType.ERROR,e.getMessage());
+                    alert.showAndWait();
+                }
+                
+            }
+        }else if(event.getClickCount() == 2){
+            
             if(pessoaSelecionada != null){
                 //substituir o painelCentral do Home
                 StackPane painelCentral = (StackPane) rootPane.getParent();
@@ -80,7 +94,6 @@ public class Listas {
                 painelCentral.getChildren().clear();
                 painelCentral.getChildren().add(App.loadTela("fxml/cadastro_pessoa.fxml", o->new CadastroPessoa(pessoaSelecionada, repositorioPessoas)));
             }
-
         }
 
 

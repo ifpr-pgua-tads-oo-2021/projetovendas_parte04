@@ -51,6 +51,14 @@ public class RepositorioPessoas {
         }
     }
 
+    public boolean removerPessoa(int id) throws SQLException{
+        try{
+            return pessoaDAO.remover(id);
+        }catch(Exception e){
+            throw new SQLException(e.getCause());
+        }
+    }
+
     public Pessoa buscarPessoa(String email) {
         return this.pessoas.stream().filter((pessoa) -> pessoa.getEmail().equals(email)).findFirst().orElse(null);
     }

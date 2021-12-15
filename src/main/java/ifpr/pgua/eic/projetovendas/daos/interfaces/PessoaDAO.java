@@ -8,7 +8,7 @@ public interface PessoaDAO {
     
     boolean cadastrar(Pessoa p) throws Exception;
     boolean atualizar(int id, Pessoa p) throws Exception;
-    boolean remover(Pessoa p) throws Exception;
+    boolean remover(int id) throws Exception;
     ArrayList<Pessoa> listar() throws Exception;
 
 }
