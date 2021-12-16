@@ -69,7 +69,7 @@ public class JDBCProdutoDAO implements ProdutoDAO {
         int quantidadeEstoque = rs.getInt("quantidadeEstoque");
         double valor = rs.getDouble("valor");
 
-        Produto p = new Produto(nome, descricao, quantidadeEstoque, valor);
+        Produto p = new Produto(id,nome, descricao, quantidadeEstoque, valor);
 
         return p;
     }

@@ -11,10 +11,13 @@ import java.io.IOException;
 
 import ifpr.pgua.eic.projetovendas.daos.JDBCPessoaDAO;
 import ifpr.pgua.eic.projetovendas.daos.JDBCProdutoDAO;
+import ifpr.pgua.eic.projetovendas.daos.JDBCVendaDAO;
 import ifpr.pgua.eic.projetovendas.daos.interfaces.PessoaDAO;
 import ifpr.pgua.eic.projetovendas.daos.interfaces.ProdutoDAO;
+import ifpr.pgua.eic.projetovendas.daos.interfaces.VendaDAO;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioPessoas;
 import ifpr.pgua.eic.projetovendas.repositorios.RepositorioProdutos;
+import ifpr.pgua.eic.projetovendas.repositorios.RepositorioVendas;
 import ifpr.pgua.eic.projetovendas.telas.Home;
 import ifpr.pgua.eic.projetovendas.utils.FabricaConexoes;
 
@@ -27,16 +30,17 @@ public class App extends Application {
 
     PessoaDAO pessoaDAO = new JDBCPessoaDAO(fabricaConexoes);
     ProdutoDAO produtoDAO = new JDBCProdutoDAO(fabricaConexoes);
+    VendaDAO vendaDAO = new JDBCVendaDAO(fabricaConexoes);
 
-    RepositorioProdutos repositorio = new RepositorioProdutos(produtoDAO);
+    RepositorioProdutos repositorioProdutos = new RepositorioProdutos(produtoDAO);
     RepositorioPessoas repositorioPessoas = new RepositorioPessoas(pessoaDAO);
-
+    RepositorioVendas repositorioVendas = new RepositorioVendas(vendaDAO);
 
     @Override
     public void start(Stage stage) throws IOException {
         
 
-        Scene scene = new Scene(loadTela("fxml/home.fxml", o->new Home(repositorioPessoas,repositorio)), 640, 480);
+        Scene scene = new Scene(loadTela("fxml/home.fxml", o->new Home(repositorioPessoas,repositorioProdutos,repositorioVendas)), 640, 480);
         stage.setScene(scene);
         stage.show();
     }

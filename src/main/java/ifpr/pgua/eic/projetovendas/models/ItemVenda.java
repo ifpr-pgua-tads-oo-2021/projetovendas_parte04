@@ -18,6 +18,10 @@ public class ItemVenda {
         this(-1,produto,quantidade,valor);
     }
 
+    public double getSubTotal(){
+        return quantidade*valor;
+    }
+
     public double getValor() {
         return valor;
     }
@@ -48,6 +52,10 @@ public class ItemVenda {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String toString(){
+        return produto.getNome()+"-"+quantidade;
     }
 
 

@@ -3,6 +3,8 @@ package ifpr.pgua.eic.projetovendas.models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import com.mysql.cj.protocol.x.ReusableOutputStream;
+
 public class Venda {
     
     private int id;
@@ -26,7 +28,7 @@ public class Venda {
 
     public void adicionar(ItemVenda itemAdd){
         for(ItemVenda item:itens){
-            if(item.getProduto().getId() == itemAdd.getId()){
+            if(item.getProduto().getId() == itemAdd.getProduto().getId()){
                 item.setQuantidade(item.getQuantidade()+itemAdd.getQuantidade());
                 return;
             }
@@ -83,6 +85,10 @@ public class Venda {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String toString(){
+        return "Pessoa:"+pessoa.getNome()+"Itens:"+itens;
     }
 
 

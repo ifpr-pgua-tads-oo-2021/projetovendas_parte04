@@ -20,8 +20,8 @@
     <HBox spacing="5.0">
 
       <HBox spacing="5.0">
-          <Label text="Cliente" labelFor="$cbCliente"/>
-          <ComboBox fx:id="cbCliente"/>
+          <Label text="Cliente" labelFor="$cbPessoas"/>
+          <ComboBox fx:id="cbPessoas"/>
       </HBox>
       <HBox spacing="5.0">
           <Label text="Data/Hora" labelFor="$tfDataHora"/>
@@ -29,7 +29,7 @@
       </HBox>
     </HBox>
     
-    <Button fx:id="btIniciarVenda" text="Iniciar Venda X"/>
+    <Button fx:id="btIniciarVenda" text="Iniciar Venda" onAction="#iniciarVenda"/>
     
     <HBox spacing="5.0">
         <HBox spacing="5.0">
@@ -40,6 +40,15 @@
             <Label text="Quantidade" labelFor="$tfQuantidade"/>
             <TextField fx:id="tfQuantidade"/>
         </HBox>
-        <Button fx:id="btAdicionaProduto" text="Adicionar"/>
+        <Button fx:id="btAdicionaProduto" text="Adicionar" onAction="#adicionarItem"/>
     </HBox>
+    <TableView fx:id="tbItensVenda">
+        <columns>
+            <TableColumn fx:id="tbcProduto" text="Produto"/>
+            <TableColumn fx:id="tbcValorUnitario" text="Valor Unit. R$"/>
+            <TableColumn fx:id="tbcQuantidade" text="Quantidade"/>
+            <TableColumn fx:id="tbcSubTotal" text="Sub. Total R$"/>
+        </columns>
+    </TableView>
+    <Button fx:id="btFinalizarVenda" text="Finalizar Venda" onAction="#finalizarVenda"/>
 </VBox>

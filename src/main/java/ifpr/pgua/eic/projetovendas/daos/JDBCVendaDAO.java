@@ -22,7 +22,7 @@ public class JDBCVendaDAO implements VendaDAO {
 
     private void salvarItens(Venda venda) throws Exception{
         Connection con = fabricaConexoes.getConnection();
-        String sql = "INSERT INTO itenvendas(idVenda,idProduto,quantidade,valor) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO itensvendas(idVenda,idProduto,quantidade,valor) VALUES (?,?,?,?)";
         
         PreparedStatement pstmt = con.prepareStatement(sql);
 
