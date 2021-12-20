@@ -12,4 +12,5 @@ public interface ProdutoDAO {
     boolean remover(Produto p) throws Exception;
     ArrayList<Produto> lista() throws Exception;
     Produto buscar(int id) throws Exception;
+    Produto buscarProdutoItem(int idItem) throws Exception;
 }

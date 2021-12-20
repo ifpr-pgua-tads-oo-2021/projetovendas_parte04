@@ -11,5 +11,6 @@ public interface PessoaDAO {
     boolean remover(int id) throws Exception;
     ArrayList<Pessoa> listar() throws Exception;
     Pessoa buscar(int id) throws Exception;
+    Pessoa buscarPessoaVenda(int idVenda) throws Exception;
 
 }

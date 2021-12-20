@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 
 import ifpr.pgua.eic.projetovendas.daos.interfaces.VendaDAO;
 import ifpr.pgua.eic.projetovendas.models.ItemVenda;
@@ -71,10 +74,65 @@ public class JDBCVendaDAO implements VendaDAO {
         return true;
     }
 
+    private ArrayList<ItemVenda> carregarItensVenda(int idVenda) throws Exception{
+        ArrayList<ItemVenda> lista = new ArrayList<>();
+
+        Connection con = fabricaConexoes.getConnection();
+
+        String sql = "SELECT * FROM itensvendas WHERE idVenda=?";
+
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setInt(1, idVenda);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        while(rs.next()){
+            int id = rs.getInt("id");
+            int quantidade = rs.getInt("quantidade");
+            double valor = rs.getDouble("valor");
+
+            ItemVenda item = new ItemVenda(id,null, quantidade, valor);
+
+            lista.add(item);
+        }
+
+        rs.close();
+        pstmt.close();
+        con.close();
+
+        return lista;
+    }
+
+
     @Override
     public ArrayList<Venda> listar() throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+        ArrayList<Venda> lista = new ArrayList<>();
+        
+        Connection con = fabricaConexoes.getConnection();
+
+        String sql = "SELECT * FROM vendas";
+
+        PreparedStatement pstmt = con.prepareStatement(sql);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        while(rs.next()){
+            int id = rs.getInt("id");
+            LocalDateTime dataHora = rs.getTimestamp("dataHora").toLocalDateTime();
+            double valorTotal = rs.getDouble("valorTotal");
+
+            ArrayList<ItemVenda> itens = carregarItensVenda(id);
+
+            Venda venda = new Venda(id, null, dataHora, valorTotal, itens);
+
+            lista.add(venda);
+        }
+
+        rs.close();
+        pstmt.close();
+        con.close();
+
+        return lista;
     }
 
     @Override

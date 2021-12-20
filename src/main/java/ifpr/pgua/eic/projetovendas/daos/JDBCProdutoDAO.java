@@ -127,4 +127,28 @@ public class JDBCProdutoDAO implements ProdutoDAO {
         
     }
 
+
+    @Override
+    public Produto buscarProdutoItem(int idItem) throws Exception {
+        Connection con = fabricaConexoes.getConnection();
+
+        String sqlIdProduto = "SELECT idProduto FROM itensvendas WHERE id=?";
+
+        PreparedStatement pstmt = con.prepareStatement(sqlIdProduto);
+
+        pstmt.setInt(1, idItem);
+
+        ResultSet rsIdProduto = pstmt.executeQuery();
+
+        rsIdProduto.next();
+        int idProduto = rsIdProduto.getInt(1);
+
+        rsIdProduto.close();
+        pstmt.close();
+        con.close();
+
+        return buscar(idProduto);
+
+    }
+
 }

@@ -151,4 +151,28 @@ public class JDBCPessoaDAO implements PessoaDAO {
         return p;
     }
 
+
+    @Override
+    public Pessoa buscarPessoaVenda(int idVenda) throws Exception {
+        Connection con = fabricaConexoes.getConnection();
+
+        String sqlIdPessoa = "SELECT idPessoa FROM vendas WHERE id=?";
+
+        PreparedStatement pstmt = con.prepareStatement(sqlIdPessoa);
+
+        pstmt.setInt(1, idVenda);
+
+        ResultSet rsIdPessoa = pstmt.executeQuery();
+
+        rsIdPessoa.next();
+        int idPessoa = rsIdPessoa.getInt(1);
+
+        rsIdPessoa.close();
+        pstmt.close();
+        con.close();
+
+        return buscar(idPessoa);
+
+    }
+
 }

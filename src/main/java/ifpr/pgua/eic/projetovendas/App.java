@@ -34,7 +34,7 @@ public class App extends Application {
 
     RepositorioProdutos repositorioProdutos = new RepositorioProdutos(produtoDAO);
     RepositorioPessoas repositorioPessoas = new RepositorioPessoas(pessoaDAO);
-    RepositorioVendas repositorioVendas = new RepositorioVendas(vendaDAO);
+    RepositorioVendas repositorioVendas = new RepositorioVendas(vendaDAO,pessoaDAO,produtoDAO);
 
     @Override
     public void start(Stage stage) throws IOException {
