@@ -1,20 +1,103 @@
 package ifpr.pgua.eic.projetovendas.telas;
 
-import ifpr.pgua.eic.projetovendas.repositorios.RepositorioVendas;
+import java.sql.SQLException;
+import java.util.List;
+
+import ifpr.pgua.eic.projetovendas.App;
+import ifpr.pgua.eic.projetovendas.models.Pessoa;
+import ifpr.pgua.eic.projetovendas.models.Produto;
+import ifpr.pgua.eic.projetovendas.repositorios.RepositorioPessoas;
+import ifpr.pgua.eic.projetovendas.repositorios.RepositorioProdutos;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
+
 
 public class Listas {
 
-    
-    private RepositorioVendas repositorio;
+    @FXML
+    private ListView<Pessoa> lstPessoas;
 
-    public Listas(RepositorioVendas repositorio){
+    @FXML
+    private ListView<Produto> lstProdutos;
+
+    @FXML
+    private Label lbListaVaziaProdutos;
+
+    @FXML
+    private FlowPane rootPane;
+
+
+    
+    private RepositorioProdutos repositorio;
+    private RepositorioPessoas repositorioPessoas;
+
+    public Listas(RepositorioPessoas repositorioPessoas, RepositorioProdutos repositorio){
         this.repositorio = repositorio;
+        this.repositorioPessoas = repositorioPessoas;
     }
 
     public void initialize(){
+
+        lstPessoas.setCellFactory(lista -> new ListCell<>(){
+            protected void updateItem(Pessoa pessoa, boolean alterou) {
+                super.updateItem(pessoa, alterou);
+                if(pessoa != null){
+                    setText("("+pessoa.getId()+")"+pessoa.getNome());
+                }else{
+                    setText(null);
+                }
+            };
+        });
+
+        try{
+            lstPessoas.getItems().addAll(repositorioPessoas.listarPessoas());
+            List<Produto> produtos = repositorio.listarProdutos();
+            lstProdutos.getItems().addAll(produtos);
+            
+        }catch(Exception e){
+            Alert alert = new Alert(AlertType.ERROR, e.getMessage());
+            alert.showAndWait();
+        }
         
     }
+
+    @FXML
+    private void atualizarRemoverPessoa(MouseEvent event){
+        Pessoa pessoaSelecionada = lstPessoas.getSelectionModel().getSelectedItem();
+
+        if(event.getButton() == MouseButton.SECONDARY && event.getClickCount() == 2){
+            if(pessoaSelecionada != null){
+                try{
+                    repositorioPessoas.removerPessoa(pessoaSelecionada.getId());
+                    lstPessoas.getItems().clear();
+                    lstPessoas.getItems().addAll(repositorioPessoas.listarPessoas());
+                }catch(Exception e){
+                    Alert alert = new Alert(AlertType.ERROR,e.getMessage());
+                    alert.showAndWait();
+                }
+                
+            }
+        }else if(event.getClickCount() == 2){
+            
+            if(pessoaSelecionada != null){
+                //substituir o painelCentral do Home
+                StackPane painelCentral = (StackPane) rootPane.getParent();
+
+                painelCentral.getChildren().clear();
+                painelCentral.getChildren().add(App.loadTela("fxml/cadastro_pessoa.fxml", o->new CadastroPessoa(pessoaSelecionada, repositorioPessoas)));
+            }
+        }
+
+
+    }
+
 
 }
